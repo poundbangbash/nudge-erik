@@ -245,14 +245,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     LogManager.notice("Assessing macOS version range for active exploits: \(filteredVersions) ", logger: sofaLog)
                     for osVersion in macOSSOFAAssets {
                         if filteredVersions.contains(osVersion.latest.productVersion) {
+                            LogManager.notice("Exploits found in \(osVersion.latest.productVersion): \(osVersion.latest.activelyExploitedCVEs.count)", logger: sofaLog)
                             totalActivelyExploitedCVEs += osVersion.latest.activelyExploitedCVEs.count
                         }
                         for securityRelease in osVersion.securityReleases {
                             if filteredVersions.contains(securityRelease.productVersion) {
+                                LogManager.notice("Exploits found in \(securityRelease.productVersion): \(securityRelease.activelyExploitedCVEs.count)", logger: sofaLog)
                                 totalActivelyExploitedCVEs += securityRelease.activelyExploitedCVEs.count
                             }
                         }
                     }
+                    LogManager.notice("Total exploits found: \(totalActivelyExploitedCVEs)", logger: sofaLog)
                     let activelyExploitedCVEs = totalActivelyExploitedCVEs > 0
 
                     let presentCVEs = selectedOS!.cves.count > 0
